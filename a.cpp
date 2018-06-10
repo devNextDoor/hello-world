@@ -2,44 +2,50 @@
 #include<queue>
 using namespace std;
 vector<int> adj[100];
-int indeg[100];
-queue<int> in_zero;
-void top_sort()
+queue<int> Q;
+
+void bfs(int num)
 {
-    while(!in_zero.empty())
+    while(!Q.empty())
     {
-        int p=in_zero.front();
-        in_zero.pop();
+        int p=Q.front(),next1=-1,next2=-1;
+        Q.pop();
         cout<<p<<" ";
-        for(int i=0;i<adj[p].size();i++)
-        {
-            indeg[adj[p][i]]--;
-            if(indeg[adj[p][i]]==0)
-            {
-                in_zero.push(adj[p][i]);
-            }
+        int r=p%10;
+        if(r==0)
+            next2=p*10+1;
+        else if(r==9)
+            next1=p*10+8;
+        else{
+            next1=p*10+(p%10-1);
+            next2=p*10+(p%10+1);
         }
+
+        if(next1!=-1)
+        {
+            if(next1>num)continue;
+            Q.push(next1);
+        }
+        if(next2!=-1)
+        {
+            if(next2>num)continue;
+            Q.push(next2);
+        }
+    }
+}
+void jumping_num(int num)
+{
+    cout<<"0 ";
+    for(int i=1;i<=9;i++)
+    {
+        if(i>num)break;
+        Q.push(i);
+        bfs(num);
     }
 }
 int main()
 {
-    int n,m,x,y;
-    cin>>n>>m;
-    for(int i=1;i<=n;i++)
-        adj[i].clear();
-    memset(indeg,0,sizeof(indeg));
-    for(int i=0;i<m;i++)
-    {
-        cin>>x>>y;
-        adj[x].push_back(y);
-        indeg[y]++;
-    }
-    for(int i=1;i<=n;i++)
-    {
-        if(indeg[i]==0)
-        {
-            in_zero.push(i);
-        }
-    }
-    top_sort();
+    int n;
+    cin>>n;
+    if(n>=0)jumping_num(n);
 }
