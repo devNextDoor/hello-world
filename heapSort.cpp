@@ -25,7 +25,7 @@ int main()
 {
     int n;
     cin>>n;
-    int arr[n];
+    int arr[n+2];
     for(int i=1;i<=n;i++)
         cin>>arr[i];
     build_heap(arr,n);
