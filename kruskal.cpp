@@ -1,58 +1,64 @@
 #include<bits/stdc++.h>
-#include<stdio.h>
-#define sci2(x,y) scanf("%d%d",&x,&y)
-#define sci3(x,y,z) scanf("%d%d%d",&x,&y,&z)
 using namespace std;
-typedef pair<int,pair<int,int> > PII;
-int pi[10002],r[10002],n,m;
-void initialize()
+vector<pair<int,pair<int,int> > > v;
+vector<pair<int,int> > mst;
+long minCost=0;
+int p[100002],r[100002];
+void init(int n)
 {
     for(int i=1;i<=n;i++)
     {
+        p[i]=i;
         r[i]=0;
-        pi[i]=i;
     }
 }
-int parent(int k)
+int parent(int i)
 {
-    if(pi[k]==k)return k;
-    pi[k]=parent(pi[k]);
-    return pi[k];
+    if(p[i]==i)return i;
+    return p[i]=parent(p[i]);
 }
 void unin(int x,int y)
 {
-    if(r[x]<r[y])
-        swap(x,y);
-    pi[y]=x;
-    if(r[x]==r[y])
-        r[x]++;
-}
-long kruskal(PII p[])
-{
-    long c=0;
-    for(int i=0;i<m;i++)
+    int px=parent(x),py=parent(y);
+    if(r[px]<=r[py])
     {
-       int a=p[i].second.first,b=p[i].second.second,w=p[i].first;
-       int px=parent(a),py=parent(b);
-       if(px!=py)
-       {
-           c+=w;
-           //cout<<a<<" "<<b<<" "<<w<<"\n";
-           unin(px,py);
-       }
+        p[px]=py;
+        if(r[px]==r[py])
+            r[py]++;
     }
-       return c;
+    else
+    {
+        p[py]=px;
+    }
+}
+void kruskal(int n)
+{
+    init(n);
+    for(int i=0;i<v.size();i++)
+    {
+        int n1=v[i].second.first,n2=v[i].second.second,w=v[i].first;
+        if(parent(n1)!=parent(n2))
+        {
+            minCost+=w;
+            unin(n1,n2);
+            mst.push_back(make_pair(n1,n2));
+        }
+    }
 }
 int main()
 {
-    int a,b,w; PII p[100002];
-    sci2(n,m);
-    initialize();
+    int n,m,x,y,w;
+    cin>>n>>m;
     for(int i=0;i<m;i++)
     {
-        sci3(a,b,w);
-        p[i]=make_pair(w,make_pair(a,b));
+        cin>>x>>y>>w;
+        v.push_back(make_pair(w,make_pair(x,y)));
     }
-    sort(p,p+m);
-    printf("%ld\n",kruskal(p));
+    sort(v.begin(),v.end());
+    kruskal(n);
+    for(int i=0;i<mst.size();i++)
+    {
+        cout<<mst[i].first<<" "<<mst[i].second<<"\n";
+    }
+    cout<<minCost;
 }
