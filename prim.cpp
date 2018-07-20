@@ -9,18 +9,17 @@ void prim()
     memset(vis,false,sizeof(vis));
     priority_queue<PII,vector<PII>,greater<PII> > Q;
     Q.push(make_pair(0,1));
-    vis[1]=true;
     while(!Q.empty())
     {
         PII f=Q.top();
         minCost+=f.first;
         int n=f.second;
         Q.pop();
+        vis[n]=true;
         for(int i=0;i<adj[n].size();i++)
         {
             if(!vis[adj[n][i].first])
             {
-                vis[adj[n][i].first]=true;
                 Q.push(make_pair(adj[n][i].second,adj[n][i].first));
             }
         }
