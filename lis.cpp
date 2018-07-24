@@ -2,7 +2,7 @@
 using namespace std;
 int lis(vector<int> a)
 {
-    int n=a.size(),lis[n+1],mx=-1;
+    int n=a.size(),lis[n+1],mx=1;
     lis[0]=1;
     for(int i=1;i<n;i++)
     {
