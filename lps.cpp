@@ -42,5 +42,5 @@ int main()
     string str;
     cin>>str;
     int l=lPalin(str);
-    cout<<l<<" "<<str.substr(st,l)<<"\n";
+    cout<<l<<" "<<str.substr(st,l)<<endl;
 }
