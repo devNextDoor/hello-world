@@ -8,9 +8,9 @@ int bin_search(int a[],int l,int r,int e)
     if(a[m]==e)
         return m;
     else if(a[m]>e)
-        bin_search(a,l,r-1,e);
+        bin_search(a,l,m-1,e);
     else if(a[m]<e)
-        bin_search(a,l+1,r,e);
+        bin_search(a,m+1,r,e);
 }
 int main()
 {
