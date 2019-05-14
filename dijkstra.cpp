@@ -17,17 +17,15 @@ void dijkstra()
         PII f=Q.top();
         int n=f.second;
         Q.pop();
+        if(vis[n])continue;
         vis[n]=true;
         for(int i=0;i<adj[n].size();i++)
         {
-            if(!vis[adj[n][i].first])
-            {
                 if(dist[adj[n][i].first]>dist[n]+adj[n][i].second)
                 {
                     dist[adj[n][i].first]=(dist[n]+adj[n][i].second);
                 }
                 Q.push(make_pair(adj[n][i].second,adj[n][i].first));
-            }
         }
     }
 }
