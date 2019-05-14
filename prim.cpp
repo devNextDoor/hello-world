@@ -12,9 +12,10 @@ void prim()
     while(!Q.empty())
     {
         PII f=Q.top();
-        minCost+=f.first;
-        int n=f.second;
         Q.pop();
+        int n=f.second;
+        if(vis[n])continue;
+        minCost+=f.first;
         vis[n]=true;
         for(int i=0;i<adj[n].size();i++)
         {
